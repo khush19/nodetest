@@ -4,7 +4,7 @@ var nodemailer = require('nodemailer')
   // create reusable transporter object using the default SMTP transport
   
 
-  exports.sendMail = function(email){
+  exports.sendMail = function(email,verificatiomsg){
      var emitter = new EventEmitter()
      let transporter = nodemailer.createTransport({
         service: "gmail",
@@ -22,7 +22,8 @@ var nodemailer = require('nodemailer')
         to: email, // list of receivers
         subject: "Hello ✔", // Subject line
         text: "Hello world?", // plain text body
-        html: "<b>Hello world?</b>" // html body
+        html: `<b>Hello world?</b>
+        <div><a href="`+verificatiomsg+`" target="_blank">Click here</a> to verify your account.</div>` 
       };
     
       // send mail with defined transport object
@@ -31,7 +32,7 @@ var nodemailer = require('nodemailer')
         emitter.emit('DONE')
         console.log("error in sending mail", err)
     
-        console.log("Message sent: %s", info.messageId);
+        // console.log("Message sent: %s", info.messageId);
         // Preview only available when sending through an Ethereal account
         console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     }) 

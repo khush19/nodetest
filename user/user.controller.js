@@ -96,3 +96,18 @@ exports.listalluser = function (req, res) {
     })
 
 }
+
+exports.verifyuser = function (req, res) {
+    var data = req.query;
+    userService.verifyuser(data).on('success', function (result) {
+        res.send({
+            message: "verfied"
+        })
+    })
+    .on('error', function (result) {
+        res.send({
+            message: "error"
+        })
+    })
+
+}

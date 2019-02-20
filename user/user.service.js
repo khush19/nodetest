@@ -22,7 +22,12 @@ exports.createUser = function(data){
             userdata.save().then(
                function(user){
                   emitter.emit("SUCCESS")
-                  mailer.sendMail(data.email);
+                  var token = jwttoken.sign({email: data.email}, secretkey, { expiresIn: 60 })
+                  var verificatiomsg = "https://trainingnodeproj.herokuapp.com/users/verify-user?token=" + token+"&email="+data.email;
+                  const email = "khush.cse07@gmail.com"
+                  mailer.sendMail(email, verificatiomsg).on('DONE', function(){
+                      emitter.emit("SUCCESS")
+                  })
                    console.log("user created" , user);
                },
                function(error){
@@ -126,5 +131,23 @@ exports.lisrallusers = function() {
         emitter.emit("err");
         console.log("error in database", err);
        })
+return emitter;
+}
+
+exports.verifyuser = function(data) {
+    var emitter = new EventEmitter();
+      jwttoken.verify(data.token, secretkey, function(err, token){
+          if(err) {
+                  emitter.emit('error', error);
+          } else {
+            UserModel.update({email: data.email}, {$set: {isVerified: true}}).then(function(user){
+                emitter.emit('success');
+            }, function(error){
+                emitter.emit('error')
+            })
+          }
+
+      })
+
 return emitter;
 }
