@@ -39,6 +39,7 @@ exports.login = function (req, res) {
     if (req.body && req.body.email && req.body.password) {
         userService.login(req.body)
             .on('SUCCESS', function (result) {
+                res.set({authToken: result})
                 res.send({
                     message: "SUCCESS"
                 })

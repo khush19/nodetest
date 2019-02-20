@@ -4,6 +4,7 @@ var UserModel = require("./user.modal");
 var crypto  = require('crypto')
 const algo="aes-256-ctr";
 const secretkey="mysecret"
+var jwttoken = require('jsonwebtoken');
 
 
 exports.createUser = function(data){
@@ -63,7 +64,9 @@ exports.login = function(data){
                     UserModel.find({password: data.password}).then(function(user){
                         console.log("Inside second call", user);
                         if(user.length) {
-                            emitter.emit('SUCCESS')
+                            var token = jwttoken.sign({email: data.email}, secretkey)
+                            console.log(token);
+                            emitter.emit('SUCCESS' , token)
                         } else{
                             emitter.emit("INCORRECT_PASSWORD")
                         }
