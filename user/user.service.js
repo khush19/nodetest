@@ -64,7 +64,7 @@ exports.login = function(data){
                     UserModel.find({password: data.password}).then(function(user){
                         console.log("Inside second call", user);
                         if(user.length) {
-                            var token = jwttoken.sign({email: data.email}, secretkey)
+                            var token = jwttoken.sign({email: data.email}, secretkey, { expiresIn: 60 })
                             console.log(token);
                             emitter.emit('SUCCESS' , token)
                         } else{
@@ -113,3 +113,18 @@ function ValidateEmail(mail)
     return (false)
 }
 
+exports.lisrallusers = function() {
+    var emitter = new EventEmitter();
+      UserModel.find({}).then(function(user){
+        console.log("users" + user);
+        if(user.length) {
+            emitter.emit("USERS", user)
+        } else {
+            emitter.emit("NO USER FOUND");
+        }
+       }, function(err){
+        emitter.emit("err");
+        console.log("error in database", err);
+       })
+return emitter;
+}

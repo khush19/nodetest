@@ -76,3 +76,23 @@ exports.login = function (req, res) {
         })
     }
 }
+
+
+exports.listalluser = function (req, res) {
+    userService.lisrallusers().on('USERS', function (result) {
+        res.send({
+            data: result
+        })
+    })
+   .on('NO USER FOUND', function (result) {
+        res.send({
+           message: "NO USER FOUND"
+        })
+    })
+    .on('err', function (result) {
+        res.send({
+           message: "ERROR"
+        })
+    })
+
+}
