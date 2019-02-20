@@ -6,7 +6,6 @@ var userSchema = new Schema(
         email: {type: String, required: true, unique: true},
         password: {type: String, required: true},
         userId: {type:Number,unique:true},
-        isverified: {type: boolean, default: false},
         // added as hosted prod data base has this key not needed for local
         userid: {type:Number,unique:true},
         date: {type:Date, default: new Date()}
