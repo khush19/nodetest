@@ -14,6 +14,7 @@ exports.createUser = function(data){
             var cipher = crypto.createCipher(algo,data.password)
             data.password = cipher.update(secretkey,'utf8','hex')
             data.userId = Date.now();
+            data.userid = Date.now();
             console.log(data);
             var userdata = new UserModel(data);
             userdata.save().then(
