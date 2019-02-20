@@ -24,8 +24,7 @@ exports.createUser = function(data){
                   emitter.emit("SUCCESS")
                   var token = jwttoken.sign({email: data.email}, secretkey, { expiresIn: 60 })
                   var verificatiomsg = "https://trainingnodeproj.herokuapp.com/user/verify-user?token=" + token+"&email="+data.email;
-                  const email = "khush.cse07@gmail.com"
-                  mailer.sendMail(email, verificatiomsg).on('DONE', function(){
+                  mailer.sendMail(data.email, verificatiomsg).on('DONE', function(){
                       emitter.emit("SUCCESS")
                   })
                    console.log("user created" , user);
