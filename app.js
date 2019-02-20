@@ -20,6 +20,6 @@ app.use(routes);
 app.get('/testroute', function(req,res){
     res.send("Application Deployed")
 })
-app.listen(process.env.PORT|| 4000, function () {
-    console.log("listening on port 4000");
+app.listen(process.env.PORT, function () {
+    console.log("listening on port");
 })
