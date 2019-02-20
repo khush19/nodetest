@@ -37,7 +37,6 @@ app.post('/read-files', function (req, res) {
             } else {
                 res.send({ message: 'Error in reading file' + count, detail: err });
             }
-
         });
     }, function () {
         res.send({ message: 'All files have been read', content: allcontent.toString().trim() });
