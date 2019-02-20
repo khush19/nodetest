@@ -7,7 +7,7 @@ var productionMongoUrl = "mongodb://test:test12345@ds145573.mlab.com:45573/ddcno
 var productService = require("./product/product.service");
 var bodyparser = require('body-parser');
 server.use(bodyparser.json());
-mongourl = process.env.PORT?productionMongoUrl: mongourl
+mongourl = process.env.PORT ? productionMongoUrl : mongourl
 mongoose.connect(mongourl, function (err, client) {
     if (err) {
         console.log("error in connection");
@@ -18,9 +18,31 @@ mongoose.connect(mongourl, function (err, client) {
 var app = express()
 app.use(bodyparser.json());
 app.use(routes);
-app.get('/testroute', function(req,res){
+app.get('/testroute', function (req, res) {
     res.send("Application Deployed")
 })
-app.listen(process.env.PORT|| 4000, function () {
+app.post('/read-files', function (req, res) {
+    var fs = require('fs');
+    var async = require('async');
+    var EventEmitter = require('events');
+    var files = req.body.files;
+    var count = 0;
+    var allcontent = "";
+    async.eachSeries(files, function (filename, cb) {
+        fs.readFile("./files/" + filename, function (err, content) {
+            allcontent += " " + content;
+            count++;
+            if (!err) {
+                cb();
+            } else {
+                res.send({ message: 'Error in reading file' + count, detail: err });
+            }
+
+        });
+    }, function () {
+        res.send({ message: 'All files have been read', content: allcontent.toString().trim() });
+    });
+});
+app.listen(process.env.PORT || 4000, function () {
     console.log("listening on port");
 })
