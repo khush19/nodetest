@@ -6,5 +6,5 @@ var checktoken = require("../checkauthentication.service")
 router.post('/signup', userController.signUp)
 router.post('/login', userController.login)
 router.post('/listalluser', checktoken.checkauthentication ,userController.listalluser)
-router.post('/verify-user',userController.verifyuser)
+router.get('/verify-user',userController.verifyuser)
 module.exports = router;
