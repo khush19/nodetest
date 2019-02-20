@@ -14,13 +14,14 @@ exports.createUser = function(data){
             var cipher = crypto.createCipher(algo,data.password)
             data.password = cipher.update(secretkey,'utf8','hex')
             data.userId = Date.now();
+                    // added as hosted prod data base has this key not needed for local
             data.userid = Date.now();
             console.log(data);
             var userdata = new UserModel(data);
             userdata.save().then(
                function(user){
                   emitter.emit("SUCCESS")
-                  mailer.sendMail();
+                  mailer.sendMail(data.email);
                    console.log("user created" , user);
                },
                function(error){
