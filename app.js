@@ -3,7 +3,7 @@ var server = express();
 var routes = require("./routes");
 var mongoose = require("mongoose");
 var mongourl = "mongodb://localhost:27017/testdatabase";
-var productionMongoUrl = "mongodb://testuser:test@12345@ds145573.mlab.com:45573/ddcnodefeb"
+var productionMongoUrl = "mongodb://testuser:test@12345@ds145573.mlab.com:45573/testdatabase"
 var productService = require("./product/product.service");
 var bodyparser = require('body-parser');
 server.use(bodyparser.json());
