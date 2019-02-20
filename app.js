@@ -7,7 +7,7 @@ var productionMongoUrl = "mongodb://test:test12345@ds145573.mlab.com:45573/testd
 var productService = require("./product/product.service");
 var bodyparser = require('body-parser');
 server.use(bodyparser.json());
-mongoose.connect(mongourl, function (err, client) {
+mongoose.connect(productionMongoUrl, function (err, client) {
     if (err) {
         console.log("error in connection");
     } else {
