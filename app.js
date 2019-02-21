@@ -18,8 +18,8 @@ mongoose.connect(mongourl, function (err, client) {
 var app = express()
 app.use(bodyparser.json());
 app.use(routes);
-app.get('/testroute', function (req, res) {
-    res.send("Application Deployed")
+app.get('/', function (req, res) {
+    res.sendFile(__dirname +'/index.html')
 })
 app.post('/read-files', function (req, res) {
     var fs = require('fs');
@@ -42,6 +42,13 @@ app.post('/read-files', function (req, res) {
         res.send({ message: 'All files have been read', content: allcontent.toString().trim() });
     });
 });
-app.listen(process.env.PORT || 4000, function () {
+var applisten = app.listen(process.env.PORT || 4000, function () {
     console.log("listening on port");
+})
+
+var socketio = require('socket.io')(applisten);
+socketio.on('connection', function(){
+    setTimeout(function(){
+        socketio.emit('datareceived', "hello")
+    }, 1000)
 })

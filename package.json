@@ -9,6 +9,7 @@
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.13",
     "nodemailer": "^5.1.1",
+    "socket.io": "^2.2.0",
     "youtube-dl": "^1.12.2"
   },
   "devDependencies": {},
